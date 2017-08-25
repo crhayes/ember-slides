@@ -1,0 +1,14 @@
+{{yield (hash
+  slide=(component "slide-card"
+    current-slide=(readonly currentSlide)
+    register-slide=(action "registerSlide")
+    unregister-slide=(action "unregisterSlide")
+  )
+  slides=(readonly slides)
+  onFirstSlide=(readonly onFirstSlide)
+  onLastSlide=(readonly onLastSlide)
+  currentSlide=(readonly currentSlide)
+  prev=(action "prev")
+  next=(action "next")
+  goTo=(action "goToSlide")
+)}}

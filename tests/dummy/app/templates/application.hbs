@@ -1,3 +1,22 @@
-<h2 id="title">Welcome to Ember</h2>
+<h2 id="title">Ember Slides</h2>
 
-{{outlet}}
+{{#slide-deck as |s|}}
+  {{#s.slide}}
+    Slide 1
+  {{/s.slide}}
+  {{#s.slide}}
+    Slide 2
+  {{/s.slide}}
+  {{#s.slide}}
+    Slide 3
+  {{/s.slide}}
+  {{#s.slide}}
+    Slide 4
+  {{/s.slide}}
+  {{#s.slide name="5"}}
+    Slide 5
+  {{/s.slide}}
+  <button {{action s.prev}} disabled={{s.onFirstSlide}}>Prev</button>
+  <button {{action s.next}} disabled={{s.onLastSlide}}>Next</button>
+  <button {{action s.goTo "5"}}>Go to 5</button>
+{{/slide-deck}}
