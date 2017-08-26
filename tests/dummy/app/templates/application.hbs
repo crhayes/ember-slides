@@ -12,8 +12,8 @@
     {{#s.slide}}
       Slide 3
     {{/s.slide}}
-    <button {{action s.prev}} disabled={{s.onFirstSlide}}>Prev</button>
-    <button {{action s.next}} disabled={{s.onLastSlide}}>Next</button>
+    <button {{action s.prev}} disabled={{s.prevDisabled}}>Prev</button>
+    <button {{action s.next}} disabled={{s.nextDisabled}}>Next</button>
   {{/slide-deck}}
 </div>
 <hr>
@@ -48,7 +48,7 @@
     {{/s.slide}}
 
     {{#each s.slides as |slide|}}
-      <button {{action s.goTo slide}}>{{slide}}</button>
+      <button {{action s.show slide}}>{{slide}}</button>
     {{/each}}
   {{/slide-deck}}
 </div>

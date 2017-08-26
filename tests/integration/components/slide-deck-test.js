@@ -263,7 +263,7 @@ test('next will move to the next slide', function (assert) {
   assert.equal(component.slides(1).text, 'Second Slide');
 });
 
-test('goTo will move to the specified slide it if exists', function (assert) {
+test('show will move to the specified slide it if exists', function (assert) {
   this.render(hbs`
     {{#slide-deck currentSlide="one" tagName="div" as |s|}}
       {{#s.slide name="one" tagName="div" data-test-name="slide"}}
@@ -272,30 +272,30 @@ test('goTo will move to the specified slide it if exists', function (assert) {
       {{#s.slide name="two" tagName="div" data-test-name="slide"}}
         Second Slide
       {{/s.slide}}
-      <button {{action s.goTo "two"}} data-test-name="goto">Go to two</button>
+      <button {{action s.show "two"}} data-test-name="show">Go to two</button>
     {{/slide-deck}}
   `);
 
   assert.equal(component.slides(0).text, 'First Slide');
   assert.equal(component.slides(1).text, '');
 
-  component.goto.click();
+  component.show.click();
 
   assert.equal(component.slides(0).text, '');
   assert.equal(component.slides(1).text, 'Second Slide');
 });
 
-test('goTo will throw an error if the specified slide does not exist', function (assert) {
+test('show will throw an error if the specified slide does not exist', function (assert) {
   this.render(hbs`
     {{#slide-deck currentSlide="one" tagName="div" as |s|}}
       {{s.slide name="one" tagName="div"}}
       {{s.slide name="two" tagName="div"}}
-      <button {{action s.goTo "ten"}} data-test-name="goto">Go to ten</button>
+      <button {{action s.show "ten"}} data-test-name="show">Go to ten</button>
     {{/slide-deck}}
   `);
 
   assert.expectAssertion(() => {
-    component.goto.click();
+    component.show.click();
   });
 });
 
@@ -482,4 +482,76 @@ test('onLastSlide is false when not on the last slide', function (assert) {
   `);
 
   assert.notOk(component.next.isDisabled, 'onLastSlide is false, causing button to be enabled');
+});
+
+test('prevDisabled is true when on the first slide and wrap is false', function (assert) {
+  this.render(hbs`
+    {{#slide-deck currentSlide="one" wrap=false tagName="div" as |s|}}
+      {{s.slide name="one" tagName="div"}}
+      {{s.slide name="two" tagName="div"}}
+      <button {{action s.prev}} disabled={{s.prevDisabled}} data-test-name="prev">Prev</button>
+    {{/slide-deck}}
+  `);
+
+  assert.ok(component.prev.isDisabled, 'prevDisabled is true, causing button to be disabled');
+});
+
+test('prevDisabled is false when on the first slide and wrap is true', function (assert) {
+  this.render(hbs`
+    {{#slide-deck currentSlide="one" wrap=true tagName="div" as |s|}}
+      {{s.slide name="one" tagName="div"}}
+      {{s.slide name="two" tagName="div"}}
+      <button {{action s.prev}} disabled={{s.prevDisabled}} data-test-name="prev">Prev</button>
+    {{/slide-deck}}
+  `);
+
+  assert.notOk(component.prev.isDisabled, 'prevDisabled is false, causing button to be enabled');
+});
+
+test('prevDisabled is false when not on the first slide', function (assert) {
+  this.render(hbs`
+    {{#slide-deck currentSlide="two" tagName="div" as |s|}}
+      {{s.slide name="one" tagName="div"}}
+      {{s.slide name="two" tagName="div"}}
+      <button {{action s.prev}} disabled={{s.prevDisabled}} data-test-name="prev">Prev</button>
+    {{/slide-deck}}
+  `);
+
+  assert.notOk(component.prev.isDisabled, 'prevDisabled is false, causing button to be enabled');
+});
+
+test('nextDisabled is true when on the last slide and wrap is false', function (assert) {
+  this.render(hbs`
+    {{#slide-deck currentSlide="two" wrap=false tagName="div" as |s|}}
+      {{s.slide name="one" tagName="div"}}
+      {{s.slide name="two" tagName="div"}}
+      <button {{action s.next}} disabled={{s.nextDisabled}} data-test-name="next">Next</button>
+    {{/slide-deck}}
+  `);
+
+  assert.ok(component.next.isDisabled, 'nextDisabled is true, causing button to be disabled');
+});
+
+test('nextDisabled is false when on the last slide and wrap is true', function (assert) {
+  this.render(hbs`
+    {{#slide-deck currentSlide="two" wrap=true tagName="div" as |s|}}
+      {{s.slide name="one" tagName="div"}}
+      {{s.slide name="two" tagName="div"}}
+      <button {{action s.next}} disabled={{s.nextDisabled}} data-test-name="next">Next</button>
+    {{/slide-deck}}
+  `);
+
+  assert.notOk(component.next.isDisabled, 'nextDisabled is false, causing button to be enabled');
+});
+
+test('nextDisabled is false when not on the last slide', function (assert) {
+  this.render(hbs`
+    {{#slide-deck currentSlide="one" tagName="div" as |s|}}
+      {{s.slide name="one" tagName="div"}}
+      {{s.slide name="two" tagName="div"}}
+      <button {{action s.next}} disabled={{s.nextDisabled}} data-test-name="next">Next</button>
+    {{/slide-deck}}
+  `);
+
+  assert.notOk(component.next.isDisabled, 'nextDisabled is false, causing button to be enabled');
 });

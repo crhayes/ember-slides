@@ -87,6 +87,24 @@ export default Component.extend({
   }),
 
   /**
+   * Is showing the previous slide disabled?
+   *
+   * @return {Boolean}
+   */
+  prevDisabled: computed('onFirstSlide', 'wrap', function () {
+    return get(this, 'onFirstSlide') && !get(this, 'wrap');
+  }),
+
+  /**
+   * Is showing the next slide disabled?
+   *
+   * @return {Boolean}
+   */
+  nextDisabled: computed('onLastSlide', 'wrap', function () {
+    return get(this, 'onLastSlide') && !get(this, 'wrap');
+  }),
+
+  /**
    * Method that is called when the currently rendered slide is removed.
    * It temporarily sets wrap=true (if not already set) so that it
    * moves to the previous slide, even if the first was removed.
@@ -204,11 +222,11 @@ export default Component.extend({
     },
 
     /**
-     * Go to the slide with the given name.
+     * Show the slide with the given name.
      *
      * @return {void}
      */
-    goToSlide(name) {
+    show(name) {
       const slides = get(this, 'slides');
       const slideIndex = slides.indexOf(name);
 

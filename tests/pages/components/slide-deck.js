@@ -25,8 +25,8 @@ export default {
     isDisabled: is(':disabled')
   },
 
-  goto: {
-    scope: '[data-test-name="goto"]',
+  show: {
+    scope: '[data-test-name="show"]',
     click: clickable()
   }
 };
