@@ -3,10 +3,14 @@
   "version": "0.0.0",
   "description": "The default blueprint for ember-cli addons.",
   "keywords": [
-    "ember-addon"
+    "ember-addon",
+    "slides",
+    "stepper",
+    "multi-step",
+    "multi-stepper"
   ],
   "license": "MIT",
-  "author": "",
+  "author": "Chris Hayes <chris@chrishayes.ca>",
   "directories": {
     "doc": "doc",
     "test": "tests"
