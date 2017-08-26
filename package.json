@@ -37,8 +37,10 @@
     "ember-disable-prototype-extensions": "^1.1.2",
     "ember-export-application-global": "^2.0.0",
     "ember-load-initializers": "^1.0.0",
+    "ember-qunit-assert-helpers": "^0.2.0",
     "ember-resolver": "^4.0.0",
     "ember-source": "~2.14.1",
+    "ember-test-selectors": "^0.3.7",
     "loader.js": "^4.2.3"
   },
   "engines": {

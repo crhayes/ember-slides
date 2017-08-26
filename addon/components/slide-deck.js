@@ -3,6 +3,7 @@ import layout from '../templates/components/slide-deck';
 
 const {
   A: array,
+  assert,
   Component,
   computed,
   computed: { reads },
@@ -87,11 +88,44 @@ export default Component.extend({
 
   /**
    * Method that is called when the currently rendered slide is removed.
+   * It temporarily sets wrap=true (if not already set) so that it
+   * moves to the previous slide, even if the first was removed.
    *
    * @return {void}
    */
   'current-slide-removed'() {
+    const wrap = get(this, 'wrap');
+
+    set(this, 'wrap', true);
     this.send('prev');
+    set(this, 'wrap', wrap);
+  },
+
+  didReceiveAttrs() {
+    this._super(...arguments);
+
+    scheduleOnce('actions', () => {
+      const slides = get(this, 'slides');
+      const currentSlide = get(this, 'currentSlide');
+
+      assert('Current slide does not exist', slides.includes(currentSlide));
+    });
+  },
+
+  didUpdateAttrs() {
+    this._super(...arguments);
+
+    scheduleOnce('actions', () => {
+      const slides = get(this, 'slides');
+      const firstSlide = get(this, 'firstSlide');
+      const currentSlide = get(this, 'currentSlide');
+
+      if (currentSlide === undefined) {
+        set(this, 'currentSlide', firstSlide);
+      } else {
+        assert('Current slide does not exist', slides.includes(currentSlide));
+      }
+    });
   },
 
   actions: {
@@ -100,6 +134,10 @@ export default Component.extend({
      * @return {void}
      */
     registerSlide(name) {
+      const slides = get(this, 'slides');
+
+      assert(`Slide names must be unique; ${name} has already been registered.`, slides.indexOf(name));
+
       get(this, 'slides').pushObject(name);
     },
 
@@ -114,7 +152,7 @@ export default Component.extend({
         scheduleOnce('actions', () => this['current-slide-removed'](this, currentSlide));
       }
 
-      get(this, 'slides').removeObject(name);
+      scheduleOnce('actions', () => get(this, 'slides').removeObject(name));
     },
 
     /**
@@ -173,6 +211,8 @@ export default Component.extend({
     goToSlide(name) {
       const slides = get(this, 'slides');
       const slideIndex = slides.indexOf(name);
+
+      assert(`You attempted to go to a slide with the name ${name} that doesn't exist.`, slideIndex !== -1);
 
       set(this, 'currentSlide', slides.objectAt(slideIndex));
     }
