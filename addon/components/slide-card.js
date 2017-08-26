@@ -42,15 +42,15 @@ export default Component.extend({
    *
    * @type {String}
    */
-  'current-slide': null,
+  currentSlide: null,
 
   /**
    * Is this the currently active slide?
    *
    * @return {Boolean}
    */
-  isActive: computed('identifier', 'current-slide', function () {
-    return get(this, 'identifier') === get(this, 'current-slide');
+  isActive: computed('identifier', 'currentSlide', function () {
+    return get(this, 'identifier') === get(this, 'currentSlide');
   }),
 
   /**
@@ -61,7 +61,7 @@ export default Component.extend({
    */
   didInsertElement() {
     this._super(...arguments);
-    this['register-slide'](get(this, 'identifier'));
+    this.registerSlide(get(this, 'identifier'));
   },
 
   /**
@@ -72,6 +72,6 @@ export default Component.extend({
    */
   willDestroyElement() {
     this._super(...arguments);
-    this['unregister-slide'](get(this, 'identifier'));
+    this.unregisterSlide(get(this, 'identifier'));
   }
 });

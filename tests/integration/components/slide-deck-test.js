@@ -381,7 +381,7 @@ test('will stay on the same slide if a different slide is removed', function (as
   assert.equal(component.slides(1).text, 3);
 });
 
-test('will call a supplied current-slide-removed action if the current slide is removed', function (assert) {
+test('will call a supplied currentSlideRemoved action if the current slide is removed', function (assert) {
   assert.expect(0);
 
   const done = assert.async();
@@ -390,7 +390,7 @@ test('will call a supplied current-slide-removed action if the current slide is 
   this.on('slideRemoved', () => done());
 
   this.render(hbs`
-    {{#slide-deck current-slide-removed=(action "slideRemoved") tagName="div" as |s|}}
+    {{#slide-deck currentSlideRemoved=(action "slideRemoved") tagName="div" as |s|}}
       {{#each slides as |slide|}}
         {{s.slide name=slide}}
       {{/each}}

@@ -93,7 +93,7 @@ export default Component.extend({
    *
    * @return {void}
    */
-  'current-slide-removed'() {
+  currentSlideRemoved() {
     const wrap = get(this, 'wrap');
 
     set(this, 'wrap', true);
@@ -149,7 +149,7 @@ export default Component.extend({
       const currentSlide = get(this, 'currentSlide');
 
       if (name === currentSlide) {
-        scheduleOnce('actions', () => this['current-slide-removed'](this, currentSlide));
+        scheduleOnce('actions', () => this.currentSlideRemoved(this, currentSlide));
       }
 
       scheduleOnce('actions', () => get(this, 'slides').removeObject(name));

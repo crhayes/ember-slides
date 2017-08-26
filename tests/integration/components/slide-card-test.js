@@ -29,8 +29,8 @@ test('it registers and unregisters itself with the slide deck with the correct n
     {{#slide-card
       tagName="div"
       name="test"
-      register-slide=(action "registerSlide")
-      unregister-slide=(action "unregisterSlide")
+      registerSlide=(action "registerSlide")
+      unregisterSlide=(action "unregisterSlide")
     }}
       template block text
     {{/slide-card}}
@@ -41,8 +41,8 @@ test('it does not render its content when it is not active', function (assert) {
   this.render(hbs`
     {{#slide-card
       tagName="div"
-      register-slide=(action "registerSlide")
-      unregister-slide=(action "unregisterSlide")
+      registerSlide=(action "registerSlide")
+      unregisterSlide=(action "unregisterSlide")
     }}
       template block text
     {{/slide-card}}
@@ -55,8 +55,8 @@ test('it renders the inverse content when it is not active', function (assert) {
   this.render(hbs`
     {{#slide-card
       tagName="div"
-      register-slide=(action "registerSlide")
-      unregister-slide=(action "unregisterSlide")
+      registerSlide=(action "registerSlide")
+      unregisterSlide=(action "unregisterSlide")
     }}
       template block text
     {{else}}
@@ -72,8 +72,8 @@ test('it renders its content when it is active', function (assert) {
     {{#slide-card
       tagName="div"
       isActive=true
-      register-slide=(action "registerSlide")
-      unregister-slide=(action "unregisterSlide")
+      registerSlide=(action "registerSlide")
+      unregisterSlide=(action "unregisterSlide")
     }}
       template block text
     {{/slide-card}}
