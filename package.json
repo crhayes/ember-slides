@@ -1,7 +1,7 @@
 {
   "name": "ember-slides",
   "version": "0.1.0",
-  "description": "The default blueprint for ember-cli addons.",
+  "description": "Easy breezy slide decks and multi-steppers in Ember.",
   "keywords": [
     "ember-addon",
     "slides",
