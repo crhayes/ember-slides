@@ -11,51 +11,51 @@ With Ember Slides you'll never have to write that step code again.
 
 **Hardcoded Slides**
 ```hbs
-{{#slide-deck as |s|}}
-  {{#s.slide}}
+{{#slide-deck as |d|}}
+  {{#d.slide}}
     Slide 1
-  {{/s.slide}}
-  {{#s.slide}}
+  {{/d.slide}}
+  {{#d.slide}}
     Slide 2
-  {{/s.slide}}
-  {{#s.slide}}
+  {{/d.slide}}
+  {{#d.slide}}
     Slide 3
-  {{/s.slide}}
-  <button {{action s.prev}} disabled={{s.prevDisabled}}>Prev</button>
-  <button {{action s.next}} disabled={{s.nextDisabled}}>Next</button>
+  {{/d.slide}}
+  <button {{action d.prev}} disabled={{d.prevDisabled}}>Prev</button>
+  <button {{action d.next}} disabled={{d.nextDisabled}}>Next</button>
 {{/slide-deck}}
 ```
 
 **Named Slides**
 ```hbs
-{{#slide-deck as |s|}}
-  {{#s.slide name="one"}}
+{{#slide-deck as |d|}}
+  {{#d.slide name="one"}}
     Slide 1
-  {{/s.slide}}
-  {{#s.slide name="two"}}
+  {{/d.slide}}
+  {{#d.slide name="two"}}
     Slide 2
-  {{/s.slide}}
-  {{#s.slide name="three"}}
+  {{/d.slide}}
+  {{#d.slide name="three"}}
     Slide 3
-  {{/s.slide}}
+  {{/d.slide}}
 
-  <button {{action s.show "one"}}>First</button>
-  <button {{action s.show "two"}}>Second</button>
-  <button {{action s.show "three"}}>Third</button>
+  <button {{action d.show "one"}}>First</button>
+  <button {{action d.show "two"}}>Second</button>
+  <button {{action d.show "three"}}>Third</button>
 {{/slide-deck}}
 ```
 
 **Dynamic Slides**
 ```hbs
-{{#slide-deck as |s|}}
+{{#slide-deck as |d|}}
   {{#each things as |thing|}}
-    {{#s.slide}}
+    {{#d.slide}}
       {{thing}}
-    {{/s.slide}}
+    {{/d.slide}}
   {{/each}}
 
-  {{#each s.slides as |slide|}}
-    <button {{action s.show slide}}>{{slide}}</button>
+  {{#each d.slides as |s|}}
+    <button {{action d.show s.name}} disabled={{s.isActive}}>{{s.name}}</button>
   {{/each}}
 {{/slide-deck}}
 ```

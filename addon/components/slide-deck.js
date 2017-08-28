@@ -29,13 +29,6 @@ export default Component.extend({
   tagName: '',
 
   /**
-   * The names of registered slides.
-   *
-   * @type {Array<String>}
-   */
-  slides: null,
-
-  /**
    * When false:
    *   Clicking "prev" on the first slide will stay on that slide.
    *   Clicking "next" on the last slide will stay on that slide.
@@ -46,6 +39,26 @@ export default Component.extend({
    * @type {Boolean}
    */
   wrap: false,
+
+  /**
+   * The names of registered slides.
+   *
+   * @type {Array<String>}
+   */
+  slides: null,
+
+  /**
+   * An array containing the names of each slide and whether or
+   * not they are currently active.
+   *
+   * @return {Array}
+   */
+  yieldedSlides: computed('slides.@each', 'currentSlide', function () {
+    const slides = get(this, 'slides');
+    const currentSlide = get(this, 'currentSlide');
+
+    return slides.map(name => ({ name, isActive: name === currentSlide }));
+  }),
 
   /**
    * The name of the current slide.

@@ -2,53 +2,53 @@
 
 <div>
   <h3>Simple example with prev/next buttons.</h3>
-  {{#slide-deck as |s|}}
-    {{#s.slide}}
+  {{#slide-deck as |d|}}
+    {{#d.slide}}
       Slide 1
-    {{/s.slide}}
-    {{#s.slide}}
+    {{/d.slide}}
+    {{#d.slide}}
       Slide 2
-    {{/s.slide}}
-    {{#s.slide}}
+    {{/d.slide}}
+    {{#d.slide}}
       Slide 3
-    {{/s.slide}}
-    <button {{action s.prev}} disabled={{s.prevDisabled}}>Prev</button>
-    <button {{action s.next}} disabled={{s.nextDisabled}}>Next</button>
+    {{/d.slide}}
+    <button {{action d.prev}} disabled={{d.prevDisabled}}>Prev</button>
+    <button {{action d.next}} disabled={{d.nextDisabled}}>Next</button>
   {{/slide-deck}}
 </div>
 <hr>
 <div>
   <h3>Simple example that wraps from first -> last and last -> first.</h3>
-  {{#slide-deck wrap=true as |s|}}
-    {{#s.slide}}
+  {{#slide-deck wrap=true as |d|}}
+    {{#d.slide}}
       Slide 1
-    {{/s.slide}}
-    {{#s.slide}}
+    {{/d.slide}}
+    {{#d.slide}}
       Slide 2
-    {{/s.slide}}
-    {{#s.slide}}
+    {{/d.slide}}
+    {{#d.slide}}
       Slide 3
-    {{/s.slide}}
-    <button {{action s.prev}}>Prev</button>
-    <button {{action s.next}}>Next</button>
+    {{/d.slide}}
+    <button {{action d.prev}}>Prev</button>
+    <button {{action d.next}}>Next</button>
   {{/slide-deck}}
 </div>
 <hr>
 <div>
   <h3>Named slides with buttons for each slide.</h3>
-  {{#slide-deck as |s|}}
-    {{#s.slide name="one"}}
+  {{#slide-deck as |d|}}
+    {{#d.slide name="one"}}
       Slide 1
-    {{/s.slide}}
-    {{#s.slide name="two"}}
+    {{/d.slide}}
+    {{#d.slide name="two"}}
       Slide 2
-    {{/s.slide}}
-    {{#s.slide name="three"}}
+    {{/d.slide}}
+    {{#d.slide name="three"}}
       Slide 3
-    {{/s.slide}}
+    {{/d.slide}}
 
-    {{#each s.slides as |slide|}}
-      <button {{action s.show slide}}>{{slide}}</button>
+    {{#each d.slides as |s|}}
+      <button {{action d.show s.name}} disabled={{s.isActive}}>{{s.name}}</button>
     {{/each}}
   {{/slide-deck}}
 </div>

@@ -9,8 +9,8 @@ export default {
     itemScope: '[data-test-name="slide"]'
   }),
 
-  yieldedSlideNames: collection({
-    itemScope: '[data-test-name="yielded-slide-name"]'
+  yieldedSlides: collection({
+    itemScope: '[data-test-name="yielded-slide"]'
   }),
 
   prev: {
