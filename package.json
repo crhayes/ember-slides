@@ -1,6 +1,6 @@
 {
   "name": "ember-slides",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Easy breezy slide decks and multi-steppers in Ember.",
   "keywords": [
     "ember-addon",
