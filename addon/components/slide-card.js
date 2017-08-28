@@ -42,15 +42,15 @@ export default Component.extend({
    *
    * @type {String}
    */
-  currentSlide: null,
+  activeSlide: null,
 
   /**
    * Is this the currently active slide?
    *
    * @return {Boolean}
    */
-  isActive: computed('identifier', 'currentSlide', function () {
-    return get(this, 'identifier') === get(this, 'currentSlide');
+  isActive: computed('identifier', 'activeSlide', function () {
+    return get(this, 'identifier') === get(this, 'activeSlide');
   }),
 
   /**

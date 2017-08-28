@@ -53,19 +53,19 @@ export default Component.extend({
    *
    * @return {Array}
    */
-  yieldedSlides: computed('slides.@each', 'currentSlide', function () {
+  yieldedSlides: computed('slides.@each', 'activeSlide', function () {
     const slides = get(this, 'slides');
-    const currentSlide = get(this, 'currentSlide');
+    const activeSlide = get(this, 'activeSlide');
 
-    return slides.map(name => ({ name, isActive: name === currentSlide }));
+    return slides.map(name => ({ name, isActive: name === activeSlide }));
   }),
 
   /**
-   * The name of the current slide.
+   * The name of the active slide.
    *
    * @type {String}
    */
-  currentSlide: reads('slides.firstObject'),
+  activeSlide: reads('firstSlide'),
 
   /**
    * The name of the first slide.
@@ -86,8 +86,8 @@ export default Component.extend({
    *
    * @return {Boolean}
    */
-  onFirstSlide: computed('currentSlide', 'firstSlide', function() {
-    return get(this, 'currentSlide') === get(this, 'firstSlide');
+  onFirstSlide: computed('activeSlide', 'firstSlide', function() {
+    return get(this, 'activeSlide') === get(this, 'firstSlide');
   }),
 
   /**
@@ -95,8 +95,8 @@ export default Component.extend({
    *
    * @return {Boolean}
    */
-  onLastSlide: computed('currentSlide', 'lastSlide', function() {
-    return get(this, 'currentSlide') === get(this, 'lastSlide');
+  onLastSlide: computed('activeSlide', 'lastSlide', function() {
+    return get(this, 'activeSlide') === get(this, 'lastSlide');
   }),
 
   /**
@@ -124,7 +124,7 @@ export default Component.extend({
    *
    * @return {void}
    */
-  currentSlideRemoved() {
+  activeSlideRemoved() {
     const wrap = get(this, 'wrap');
 
     set(this, 'wrap', true);
@@ -137,9 +137,9 @@ export default Component.extend({
 
     scheduleOnce('actions', () => {
       const slides = get(this, 'slides');
-      const currentSlide = get(this, 'currentSlide');
+      const activeSlide = get(this, 'activeSlide');
 
-      assert('Current slide does not exist', slides.includes(currentSlide));
+      assert('active slide does not exist', slides.includes(activeSlide));
     });
   },
 
@@ -149,12 +149,12 @@ export default Component.extend({
     scheduleOnce('actions', () => {
       const slides = get(this, 'slides');
       const firstSlide = get(this, 'firstSlide');
-      const currentSlide = get(this, 'currentSlide');
+      const activeSlide = get(this, 'activeSlide');
 
-      if (currentSlide === undefined) {
-        set(this, 'currentSlide', firstSlide);
+      if (activeSlide === undefined) {
+        set(this, 'activeSlide', firstSlide);
       } else {
-        assert('Current slide does not exist', slides.includes(currentSlide));
+        assert('active slide does not exist', slides.includes(activeSlide));
       }
     });
   },
@@ -177,10 +177,10 @@ export default Component.extend({
      * @return {void}
      */
     unregisterSlide(name) {
-      const currentSlide = get(this, 'currentSlide');
+      const activeSlide = get(this, 'activeSlide');
 
-      if (name === currentSlide) {
-        scheduleOnce('actions', () => this.currentSlideRemoved(this, currentSlide));
+      if (name === activeSlide) {
+        scheduleOnce('actions', () => this.activeSlideRemoved(this, activeSlide));
       }
 
       scheduleOnce('actions', () => get(this, 'slides').removeObject(name));
@@ -195,19 +195,19 @@ export default Component.extend({
       const wrap = get(this, 'wrap');
       const slides = get(this, 'slides');
       const lastSlide = get(this, 'lastSlide');
-      const currentSlide = get(this, 'currentSlide');
+      const activeSlide = get(this, 'activeSlide');
       const onFirstSlide = get(this, 'onFirstSlide');
       let prevSlideIndex;
 
       if (onFirstSlide && wrap) {
         prevSlideIndex = slides.indexOf(lastSlide);
       } else if (!onFirstSlide) {
-        prevSlideIndex = slides.indexOf(currentSlide) - 1
+        prevSlideIndex = slides.indexOf(activeSlide) - 1
       } else {
         return;
       }
 
-      set(this, 'currentSlide', slides.objectAt(prevSlideIndex));
+      set(this, 'activeSlide', slides.objectAt(prevSlideIndex));
     },
 
     /**
@@ -219,19 +219,19 @@ export default Component.extend({
       const wrap = get(this, 'wrap');
       const slides = get(this, 'slides');
       const firstSlide = get(this, 'firstSlide');
-      const currentSlide = get(this, 'currentSlide');
+      const activeSlide = get(this, 'activeSlide');
       const onLastSlide = get(this, 'onLastSlide');
       let nextSlideIndex;
 
       if (onLastSlide && wrap) {
         nextSlideIndex = slides.indexOf(firstSlide);
       } else if (!onLastSlide) {
-        nextSlideIndex = slides.indexOf(currentSlide) + 1;
+        nextSlideIndex = slides.indexOf(activeSlide) + 1;
       } else {
         return;
       }
 
-      set(this, 'currentSlide', slides.objectAt(nextSlideIndex));
+      set(this, 'activeSlide', slides.objectAt(nextSlideIndex));
     },
 
     /**
@@ -245,7 +245,7 @@ export default Component.extend({
 
       assert(`You attempted to go to a slide with the name ${name} that doesn't exist.`, slideIndex !== -1);
 
-      set(this, 'currentSlide', slides.objectAt(slideIndex));
+      set(this, 'activeSlide', slides.objectAt(slideIndex));
     }
   }
 });

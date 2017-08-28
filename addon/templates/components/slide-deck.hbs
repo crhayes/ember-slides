@@ -1,11 +1,11 @@
 {{yield (hash
   slide=(component "slide-card"
-    currentSlide=(readonly currentSlide)
+    activeSlide=(readonly activeSlide)
     registerSlide=(action "registerSlide")
     unregisterSlide=(action "unregisterSlide")
   )
   slides=(readonly yieldedSlides)
-  currentSlide=(readonly currentSlide)
+  activeSlide=(readonly activeSlide)
   onFirstSlide=(readonly onFirstSlide)
   onLastSlide=(readonly onLastSlide)
   prevDisabled=(readonly prevDisabled)

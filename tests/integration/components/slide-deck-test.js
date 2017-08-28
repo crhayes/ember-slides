@@ -32,11 +32,11 @@ test('it renders the first slide by default', function (assert) {
   assert.equal(component.slides(1).text, '');
 });
 
-test('it renders the first slide when currentSlide is undefined', function (assert) {
-  this.set('currentSlide', 2);
+test('it renders the first slide when activeSlide is undefined', function (assert) {
+  this.set('activeSlide', 2);
 
   this.render(hbs`
-    {{#slide-deck currentSlide=currentSlide tagName="div" as |d|}}
+    {{#slide-deck activeSlide=activeSlide tagName="div" as |d|}}
       {{#d.slide name=1 tagName="div" data-test-name="slide"}}
         First Slide
       {{/d.slide}}
@@ -49,15 +49,15 @@ test('it renders the first slide when currentSlide is undefined', function (asse
   assert.equal(component.slides(0).text, '');
   assert.equal(component.slides(1).text, 'Second Slide');
 
-  this.set('currentSlide', undefined);
+  this.set('activeSlide', undefined);
 
   assert.equal(component.slides(0).text, 'First Slide');
   assert.equal(component.slides(1).text, '');
 });
 
-test('setting currentSlide renders a slide by name', function (assert) {
+test('setting activeSlide renders a slide by name', function (assert) {
   this.render(hbs`
-    {{#slide-deck currentSlide="two" tagName="div" as |d|}}
+    {{#slide-deck activeSlide="two" tagName="div" as |d|}}
       {{#d.slide name="one" tagName="div" data-test-name="slide"}}
         First Slide
       {{/d.slide}}
@@ -71,11 +71,11 @@ test('setting currentSlide renders a slide by name', function (assert) {
   assert.equal(component.slides(1).text, 'Second Slide');
 });
 
-test('slide changes mutate the bound value of currentSlide', function (assert) {
+test('slide changes mutate the bound value of activeSlide', function (assert) {
   this.set('slide', 'one');
 
   this.render(hbs`
-    {{#slide-deck currentSlide=slide tagName="div" as |d|}}
+    {{#slide-deck activeSlide=slide tagName="div" as |d|}}
       {{#d.slide name="one" tagName="div" data-test-name="slide"}}
         First Slide
       {{/d.slide}}
@@ -94,10 +94,10 @@ test('slide changes mutate the bound value of currentSlide', function (assert) {
   assert.equal(this.get('slide'), 'two', 'the bound value was mutated');
 });
 
-test('an error is thrown when current slide does not initially exist', function (assert) {
+test('an error is thrown when active slide does not initially exist', function (assert) {
   assert.expectAssertion(() => {
     this.render(hbs`
-      {{#slide-deck currentSlide="ten" tagName="div" as |d|}}
+      {{#slide-deck activeSlide="ten" tagName="div" as |d|}}
         {{d.slide name="one" tagName="div"}}
         {{d.slide name="two" tagName="div"}}
       {{/slide-deck}}
@@ -105,18 +105,18 @@ test('an error is thrown when current slide does not initially exist', function 
   });
 });
 
-test('an error is thrown when changing the current slide to one that does not exist', function (assert) {
-  this.set('currentSlide', 'one');
+test('an error is thrown when changing the active slide to one that does not exist', function (assert) {
+  this.set('activeSlide', 'one');
 
   this.render(hbs`
-    {{#slide-deck currentSlide=currentSlide tagName="div" as |d|}}
+    {{#slide-deck activeSlide=activeSlide tagName="div" as |d|}}
       {{d.slide name="one" tagName="div"}}
       {{d.slide name="two" tagName="div"}}
     {{/slide-deck}}
   `);
 
   assert.expectAssertion(() => {
-    this.set('currentSlide', 'ten');
+    this.set('activeSlide', 'ten');
   });
 });
 
@@ -133,7 +133,7 @@ test('an error is thrown when registering a slide with a name that has already b
 
 test('when on the first slide, and when wrap is false, prev will remain on the same slide', function (assert) {
   this.render(hbs`
-    {{#slide-deck currentSlide="one" tagName="div" as |d|}}
+    {{#slide-deck activeSlide="one" tagName="div" as |d|}}
       {{#d.slide name="one" tagName="div" data-test-name="slide"}}
         First Slide
       {{/d.slide}}
@@ -155,7 +155,7 @@ test('when on the first slide, and when wrap is false, prev will remain on the s
 
 test('when on the first slide, and when wrap is true, prev will move to the last slide', function (assert) {
   this.render(hbs`
-    {{#slide-deck currentSlide="one" wrap=true tagName="div" as |d|}}
+    {{#slide-deck activeSlide="one" wrap=true tagName="div" as |d|}}
       {{#d.slide name="one" tagName="div" data-test-name="slide"}}
         First Slide
       {{/d.slide}}
@@ -177,7 +177,7 @@ test('when on the first slide, and when wrap is true, prev will move to the last
 
 test('when on the last slide, and when wrap is false, next will remain on the same slide', function (assert) {
   this.render(hbs`
-    {{#slide-deck currentSlide="two" tagName="div" as |d|}}
+    {{#slide-deck activeSlide="two" tagName="div" as |d|}}
       {{#d.slide name="one" tagName="div" data-test-name="slide"}}
         First Slide
       {{/d.slide}}
@@ -199,7 +199,7 @@ test('when on the last slide, and when wrap is false, next will remain on the sa
 
 test('when on the last slide, and when wrap is true, next will move to the first slide', function (assert) {
   this.render(hbs`
-    {{#slide-deck currentSlide="two" wrap=true tagName="div" as |d|}}
+    {{#slide-deck activeSlide="two" wrap=true tagName="div" as |d|}}
       {{#d.slide name="one" tagName="div" data-test-name="slide"}}
         First Slide
       {{/d.slide}}
@@ -221,7 +221,7 @@ test('when on the last slide, and when wrap is true, next will move to the first
 
 test('prev will move to the previous slide', function (assert) {
   this.render(hbs`
-    {{#slide-deck currentSlide="two" tagName="div" as |d|}}
+    {{#slide-deck activeSlide="two" tagName="div" as |d|}}
       {{#d.slide name="one" tagName="div" data-test-name="slide"}}
         First Slide
       {{/d.slide}}
@@ -243,7 +243,7 @@ test('prev will move to the previous slide', function (assert) {
 
 test('next will move to the next slide', function (assert) {
   this.render(hbs`
-    {{#slide-deck currentSlide="one" tagName="div" as |d|}}
+    {{#slide-deck activeSlide="one" tagName="div" as |d|}}
       {{#d.slide name="one" tagName="div" data-test-name="slide"}}
         First Slide
       {{/d.slide}}
@@ -265,7 +265,7 @@ test('next will move to the next slide', function (assert) {
 
 test('show will move to the specified slide it if exists', function (assert) {
   this.render(hbs`
-    {{#slide-deck currentSlide="one" tagName="div" as |d|}}
+    {{#slide-deck activeSlide="one" tagName="div" as |d|}}
       {{#d.slide name="one" tagName="div" data-test-name="slide"}}
         First Slide
       {{/d.slide}}
@@ -287,7 +287,7 @@ test('show will move to the specified slide it if exists', function (assert) {
 
 test('show will throw an error if the specified slide does not exist', function (assert) {
   this.render(hbs`
-    {{#slide-deck currentSlide="one" tagName="div" as |d|}}
+    {{#slide-deck activeSlide="one" tagName="div" as |d|}}
       {{d.slide name="one" tagName="div"}}
       {{d.slide name="two" tagName="div"}}
       <button {{action d.show "ten"}} data-test-name="show">Go to ten</button>
@@ -313,13 +313,13 @@ test('slides can be rendered dynamically', function (assert) {
   assert.equal(component.slides().count, 5);
 });
 
-test('will move to the previous slide if the current slide is the last slide and it is removed', function (assert) {
+test('will move to the previous slide if the active slide is the last slide and it is removed', function (assert) {
   assert.expect(4);
 
   this.set('slides', [1, 2, 3, 4, 5]);
 
   this.render(hbs`
-    {{#slide-deck currentSlide=5 tagName="div" as |d|}}
+    {{#slide-deck activeSlide=5 tagName="div" as |d|}}
       {{#each slides as |slide|}}
         {{#d.slide name=slide tagName="div" data-test-name="slide"}}
           {{slide}}
@@ -337,11 +337,11 @@ test('will move to the previous slide if the current slide is the last slide and
   assert.equal(component.slides(3).text, 4);
 });
 
-test('will move to the last slide if the current slide is the first slide and it is removed', function (assert) {
+test('will move to the last slide if the active slide is the first slide and it is removed', function (assert) {
   this.set('slides', [1, 2, 3, 4, 5]);
 
   this.render(hbs`
-    {{#slide-deck currentSlide=1 tagName="div" as |d|}}
+    {{#slide-deck activeSlide=1 tagName="div" as |d|}}
       {{#each slides as |slide|}}
         {{#d.slide name=slide tagName="div" data-test-name="slide"}}
           {{slide}}
@@ -363,7 +363,7 @@ test('will stay on the same slide if a different slide is removed', function (as
   this.set('slides', [1, 2, 3, 4, 5]);
 
   this.render(hbs`
-    {{#slide-deck currentSlide=3 tagName="div" as |d|}}
+    {{#slide-deck activeSlide=3 tagName="div" as |d|}}
       {{#each slides as |slide|}}
         {{#d.slide name=slide tagName="div" data-test-name="slide"}}
           {{slide}}
@@ -381,7 +381,7 @@ test('will stay on the same slide if a different slide is removed', function (as
   assert.equal(component.slides(1).text, 3);
 });
 
-test('will call a supplied currentSlideRemoved action if the current slide is removed', function (assert) {
+test('will call a supplied activeSlideRemoved action if the active slide is removed', function (assert) {
   assert.expect(0);
 
   const done = assert.async();
@@ -390,7 +390,7 @@ test('will call a supplied currentSlideRemoved action if the current slide is re
   this.on('slideRemoved', () => done());
 
   this.render(hbs`
-    {{#slide-deck currentSlideRemoved=(action "slideRemoved") tagName="div" as |d|}}
+    {{#slide-deck activeSlideRemoved=(action "slideRemoved") tagName="div" as |d|}}
       {{#each slides as |slide|}}
         {{d.slide name=slide}}
       {{/each}}
@@ -402,7 +402,7 @@ test('will call a supplied currentSlideRemoved action if the current slide is re
 
 test('onFirstSlide is true when on the first slide', function (assert) {
   this.render(hbs`
-    {{#slide-deck currentSlide="one" tagName="div" as |d|}}
+    {{#slide-deck activeSlide="one" tagName="div" as |d|}}
       {{d.slide name="one" tagName="div"}}
       {{d.slide name="two" tagName="div"}}
       <button {{action d.prev}} disabled={{d.onFirstSlide}} data-test-name="prev">Prev</button>
@@ -414,7 +414,7 @@ test('onFirstSlide is true when on the first slide', function (assert) {
 
 test('onFirstSlide is false when not on the first slide', function (assert) {
   this.render(hbs`
-    {{#slide-deck currentSlide="two" tagName="div" as |d|}}
+    {{#slide-deck activeSlide="two" tagName="div" as |d|}}
       {{d.slide name="one" tagName="div"}}
       {{d.slide name="two" tagName="div"}}
       <button {{action d.prev}} disabled={{d.onFirstSlide}} data-test-name="prev">Prev</button>
@@ -426,7 +426,7 @@ test('onFirstSlide is false when not on the first slide', function (assert) {
 
 test('onLastSlide is true when on the last slide', function (assert) {
   this.render(hbs`
-    {{#slide-deck currentSlide="two" tagName="div" as |d|}}
+    {{#slide-deck activeSlide="two" tagName="div" as |d|}}
       {{d.slide name="one" tagName="div"}}
       {{d.slide name="two" tagName="div"}}
       <button {{action d.next}} disabled={{d.onLastSlide}} data-test-name="next">Next</button>
@@ -438,7 +438,7 @@ test('onLastSlide is true when on the last slide', function (assert) {
 
 test('onLastSlide is false when not on the last slide', function (assert) {
   this.render(hbs`
-    {{#slide-deck currentSlide="one" tagName="div" as |d|}}
+    {{#slide-deck activeSlide="one" tagName="div" as |d|}}
       {{d.slide name="one" tagName="div"}}
       {{d.slide name="two" tagName="div"}}
       <button {{action d.next}} disabled={{d.onLastSlide}} data-test-name="next">Next</button>
@@ -450,7 +450,7 @@ test('onLastSlide is false when not on the last slide', function (assert) {
 
 test('prevDisabled is true when on the first slide and wrap is false', function (assert) {
   this.render(hbs`
-    {{#slide-deck currentSlide="one" wrap=false tagName="div" as |d|}}
+    {{#slide-deck activeSlide="one" wrap=false tagName="div" as |d|}}
       {{d.slide name="one" tagName="div"}}
       {{d.slide name="two" tagName="div"}}
       <button {{action d.prev}} disabled={{d.prevDisabled}} data-test-name="prev">Prev</button>
@@ -462,7 +462,7 @@ test('prevDisabled is true when on the first slide and wrap is false', function 
 
 test('prevDisabled is false when on the first slide and wrap is true', function (assert) {
   this.render(hbs`
-    {{#slide-deck currentSlide="one" wrap=true tagName="div" as |d|}}
+    {{#slide-deck activeSlide="one" wrap=true tagName="div" as |d|}}
       {{d.slide name="one" tagName="div"}}
       {{d.slide name="two" tagName="div"}}
       <button {{action d.prev}} disabled={{d.prevDisabled}} data-test-name="prev">Prev</button>
@@ -474,7 +474,7 @@ test('prevDisabled is false when on the first slide and wrap is true', function 
 
 test('prevDisabled is false when not on the first slide', function (assert) {
   this.render(hbs`
-    {{#slide-deck currentSlide="two" tagName="div" as |d|}}
+    {{#slide-deck activeSlide="two" tagName="div" as |d|}}
       {{d.slide name="one" tagName="div"}}
       {{d.slide name="two" tagName="div"}}
       <button {{action d.prev}} disabled={{d.prevDisabled}} data-test-name="prev">Prev</button>
@@ -486,7 +486,7 @@ test('prevDisabled is false when not on the first slide', function (assert) {
 
 test('nextDisabled is true when on the last slide and wrap is false', function (assert) {
   this.render(hbs`
-    {{#slide-deck currentSlide="two" wrap=false tagName="div" as |d|}}
+    {{#slide-deck activeSlide="two" wrap=false tagName="div" as |d|}}
       {{d.slide name="one" tagName="div"}}
       {{d.slide name="two" tagName="div"}}
       <button {{action d.next}} disabled={{d.nextDisabled}} data-test-name="next">Next</button>
@@ -498,7 +498,7 @@ test('nextDisabled is true when on the last slide and wrap is false', function (
 
 test('nextDisabled is false when on the last slide and wrap is true', function (assert) {
   this.render(hbs`
-    {{#slide-deck currentSlide="two" wrap=true tagName="div" as |d|}}
+    {{#slide-deck activeSlide="two" wrap=true tagName="div" as |d|}}
       {{d.slide name="one" tagName="div"}}
       {{d.slide name="two" tagName="div"}}
       <button {{action d.next}} disabled={{d.nextDisabled}} data-test-name="next">Next</button>
@@ -510,7 +510,7 @@ test('nextDisabled is false when on the last slide and wrap is true', function (
 
 test('nextDisabled is false when not on the last slide', function (assert) {
   this.render(hbs`
-    {{#slide-deck currentSlide="one" tagName="div" as |d|}}
+    {{#slide-deck activeSlide="one" tagName="div" as |d|}}
       {{d.slide name="one" tagName="div"}}
       {{d.slide name="two" tagName="div"}}
       <button {{action d.next}} disabled={{d.nextDisabled}} data-test-name="next">Next</button>
@@ -522,7 +522,7 @@ test('nextDisabled is false when not on the last slide', function (assert) {
 
 test('it yields all of the slides with their name', function (assert) {
   this.render(hbs`
-    {{#slide-deck currentSlide="one" tagName="div" as |d|}}
+    {{#slide-deck activeSlide="one" tagName="div" as |d|}}
       {{d.slide name="one" tagName="div"}}
       {{d.slide name="two" tagName="div"}}
       {{#each d.slides as |s|}}
@@ -538,9 +538,9 @@ test('it yields all of the slides with their name', function (assert) {
   assert.equal(component.yieldedSlides(1).text, 'two');
 });
 
-test('it yields the correct isActive value for each slide based on whether it is the current slide', function (assert) {
+test('it yields the correct isActive value for each slide based on whether it is the active slide', function (assert) {
   this.render(hbs`
-    {{#slide-deck currentSlide="one" tagName="div" as |d|}}
+    {{#slide-deck activeSlide="one" tagName="div" as |d|}}
       {{d.slide name="one" tagName="div"}}
       {{d.slide name="two" tagName="div"}}
       {{#each d.slides as |s|}}
@@ -558,7 +558,7 @@ test('it yields the correct isActive value for each slide based on whether it is
 
 test('the yieled slide names can be rendered before the slides are defined', function (assert) {
   this.render(hbs`
-    {{#slide-deck currentSlide="one" tagName="div" as |d|}}
+    {{#slide-deck activeSlide="one" tagName="div" as |d|}}
       {{#each d.slides as |s|}}
         <div data-test-name="yielded-slide">
           {{s.name}}
@@ -576,7 +576,7 @@ test('the yieled slide names can be rendered before the slides are defined', fun
 
 test('the yieled slide names can be rendered after the slides are defined', function (assert) {
   this.render(hbs`
-    {{#slide-deck currentSlide="one" tagName="div" as |d|}}
+    {{#slide-deck activeSlide="one" tagName="div" as |d|}}
       {{d.slide name="one" tagName="div"}}
       {{d.slide name="two" tagName="div"}}
       {{#each d.slides as |s|}}
