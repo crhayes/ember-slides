@@ -56,7 +56,7 @@ export default Component.extend({
   yieldedSlides: computed('slides.@each', 'activeSlide', function () {
     const slides = get(this, 'slides');
     const activeSlide = get(this, 'activeSlide');
-
+    
     return slides.map(name => ({ name, isActive: name === activeSlide }));
   }),
 
@@ -150,7 +150,6 @@ export default Component.extend({
       const slides = get(this, 'slides');
       const firstSlide = get(this, 'firstSlide');
       const activeSlide = get(this, 'activeSlide');
-
       if (activeSlide === undefined) {
         set(this, 'activeSlide', firstSlide);
       } else {
@@ -249,3 +248,4 @@ export default Component.extend({
     }
   }
 });
+    

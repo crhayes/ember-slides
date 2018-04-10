@@ -6,6 +6,7 @@ const {
   computed,
   guidFor,
   get,
+  typeOf
 } = Ember;
 
 export default Component.extend({
@@ -32,8 +33,11 @@ export default Component.extend({
    *
    * @return {String}
    */
-  identifier: computed('name', function() {
-    return get(this, 'name') || guidFor(this);
+  identifier: computed('name', function() {    
+    if (!get(this, 'name') && typeOf(get(this, 'name')) !== 'number') {
+      return guidFor(this)
+    }
+    return get(this, 'name');
   }),
 
   /**
