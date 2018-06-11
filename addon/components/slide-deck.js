@@ -128,7 +128,7 @@ export default Component.extend({
     const wrap = get(this, 'wrap');
 
     set(this, 'wrap', true);
-    this.send('prev');
+    this.prev();
     set(this, 'wrap', wrap);
   },
 
