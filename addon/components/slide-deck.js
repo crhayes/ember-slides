@@ -128,7 +128,7 @@ export default Component.extend({
     const wrap = get(this, 'wrap');
 
     set(this, 'wrap', true);
-    this.send('prev');
+    this.prev();
     set(this, 'wrap', wrap);
   },
 
@@ -150,7 +150,6 @@ export default Component.extend({
       const slides = get(this, 'slides');
       const firstSlide = get(this, 'firstSlide');
       const activeSlide = get(this, 'activeSlide');
-
       if (activeSlide === undefined) {
         set(this, 'activeSlide', firstSlide);
       } else {
@@ -158,6 +157,55 @@ export default Component.extend({
       }
     });
   },
+
+  /**
+   * Move to the previous slide.
+   *
+   * @return {void}
+   */
+  prev() {
+    const wrap = get(this, 'wrap');
+    const slides = get(this, 'slides');
+    const lastSlide = get(this, 'lastSlide');
+    const activeSlide = get(this, 'activeSlide');
+    const onFirstSlide = get(this, 'onFirstSlide');
+    let prevSlideIndex;
+
+    if (onFirstSlide && wrap) {
+      prevSlideIndex = slides.indexOf(lastSlide);
+    } else if (!onFirstSlide) {
+      prevSlideIndex = slides.indexOf(activeSlide) - 1
+    } else {
+      return;
+    }
+
+    set(this, 'activeSlide', slides.objectAt(prevSlideIndex));
+  },
+
+  /**
+   * Move to the next slide.
+   *
+   * @return {void}
+   */
+  next() {
+    const wrap = get(this, 'wrap');
+    const slides = get(this, 'slides');
+    const firstSlide = get(this, 'firstSlide');
+    const activeSlide = get(this, 'activeSlide');
+    const onLastSlide = get(this, 'onLastSlide');
+    let nextSlideIndex;
+
+    if (onLastSlide && wrap) {
+      nextSlideIndex = slides.indexOf(firstSlide);
+    } else if (!onLastSlide) {
+      nextSlideIndex = slides.indexOf(activeSlide) + 1;
+    } else {
+      return;
+    }
+
+    set(this, 'activeSlide', slides.objectAt(nextSlideIndex));
+  },
+
 
   actions: {
     /**
@@ -187,51 +235,14 @@ export default Component.extend({
     },
 
     /**
-     * Move to the previous slide.
-     *
-     * @return {void}
+     * Use action to trigger method call
      */
     prev() {
-      const wrap = get(this, 'wrap');
-      const slides = get(this, 'slides');
-      const lastSlide = get(this, 'lastSlide');
-      const activeSlide = get(this, 'activeSlide');
-      const onFirstSlide = get(this, 'onFirstSlide');
-      let prevSlideIndex;
-
-      if (onFirstSlide && wrap) {
-        prevSlideIndex = slides.indexOf(lastSlide);
-      } else if (!onFirstSlide) {
-        prevSlideIndex = slides.indexOf(activeSlide) - 1
-      } else {
-        return;
-      }
-
-      set(this, 'activeSlide', slides.objectAt(prevSlideIndex));
+      this.prev();
     },
 
-    /**
-     * Move to the next slide.
-     *
-     * @return {void}
-     */
     next() {
-      const wrap = get(this, 'wrap');
-      const slides = get(this, 'slides');
-      const firstSlide = get(this, 'firstSlide');
-      const activeSlide = get(this, 'activeSlide');
-      const onLastSlide = get(this, 'onLastSlide');
-      let nextSlideIndex;
-
-      if (onLastSlide && wrap) {
-        nextSlideIndex = slides.indexOf(firstSlide);
-      } else if (!onLastSlide) {
-        nextSlideIndex = slides.indexOf(activeSlide) + 1;
-      } else {
-        return;
-      }
-
-      set(this, 'activeSlide', slides.objectAt(nextSlideIndex));
+      this.next();
     },
 
     /**

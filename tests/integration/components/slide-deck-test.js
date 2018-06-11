@@ -71,6 +71,26 @@ test('setting activeSlide renders a slide by name', function (assert) {
   assert.equal(component.slides(1).text, 'Second Slide');
 });
 
+
+test('using array indexes works to change slides', function(assert) {
+  this.set('slide', 0);
+  this.render(hbs`
+    {{#slide-deck activeSlide=slide tagName="div" as |d|}}
+      {{#d.slide name=0 tagName="div" data-test-name="slide"}}
+        First Slide
+      {{/d.slide}}
+      {{#d.slide name=1 tagName="div" data-test-name="slide"}}
+        Second Slide
+      {{/d.slide}}
+      <button {{action d.next}} data-test-name="next">Next</button>
+    {{/slide-deck}}
+  `);
+
+  assert.equal(component.slides(0).text, 'First Slide', 'the first slide is visible');
+  this.set('slide', 1);
+  assert.equal(component.slides(1).text, 'Second Slide', 'the second slide is visible');
+});
+
 test('slide changes mutate the bound value of activeSlide', function (assert) {
   this.set('slide', 'one');
 
