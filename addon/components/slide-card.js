@@ -1,12 +1,7 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { computed, get } from '@ember/object';
+import { guidFor } from '@ember/object/internals';
 import layout from '../templates/components/slide-card';
-
-const {
-  Component,
-  computed,
-  guidFor,
-  get,
-} = Ember;
 
 export default Component.extend({
   layout,
