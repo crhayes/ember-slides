@@ -28,8 +28,8 @@ test('it renders the first slide by default', function (assert) {
     {{/slide-deck}}
   `);
 
-  assert.equal(component.slides(0).text, 'First Slide');
-  assert.equal(component.slides(1).text, '');
+  assert.equal(component.slides.objectAt(0).text, 'First Slide');
+  assert.equal(component.slides.objectAt(1).text, '');
 });
 
 test('it renders the first slide when activeSlide is undefined', function (assert) {
@@ -46,13 +46,13 @@ test('it renders the first slide when activeSlide is undefined', function (asser
     {{/slide-deck}}
   `);
 
-  assert.equal(component.slides(0).text, '');
-  assert.equal(component.slides(1).text, 'Second Slide');
+  assert.equal(component.slides.objectAt(0).text, '');
+  assert.equal(component.slides.objectAt(1).text, 'Second Slide');
 
   this.set('activeSlide', undefined);
 
-  assert.equal(component.slides(0).text, 'First Slide');
-  assert.equal(component.slides(1).text, '');
+  assert.equal(component.slides.objectAt(0).text, 'First Slide');
+  assert.equal(component.slides.objectAt(1).text, '');
 });
 
 test('setting activeSlide renders a slide by name', function (assert) {
@@ -67,8 +67,8 @@ test('setting activeSlide renders a slide by name', function (assert) {
     {{/slide-deck}}
   `);
 
-  assert.equal(component.slides(0).text, '');
-  assert.equal(component.slides(1).text, 'Second Slide');
+  assert.equal(component.slides.objectAt(0).text, '');
+  assert.equal(component.slides.objectAt(1).text, 'Second Slide');
 });
 
 test('slide changes mutate the bound value of activeSlide', function (assert) {
@@ -86,11 +86,11 @@ test('slide changes mutate the bound value of activeSlide', function (assert) {
     {{/slide-deck}}
   `);
 
-  assert.equal(component.slides(0).text, 'First Slide', 'the first slide is visible');
+  assert.equal(component.slides.objectAt(0).text, 'First Slide', 'the first slide is visible');
 
   component.next.click();
 
-  assert.equal(component.slides(1).text, 'Second Slide', 'the second slide is visible');
+  assert.equal(component.slides.objectAt(1).text, 'Second Slide', 'the second slide is visible');
   assert.equal(this.get('slide'), 'two', 'the bound value was mutated');
 });
 
@@ -144,13 +144,13 @@ test('when on the first slide, and when wrap is false, prev will remain on the s
     {{/slide-deck}}
   `);
 
-  assert.equal(component.slides(0).text, 'First Slide', 'the first slide is visible');
-  assert.equal(component.slides(1).text, '');
+  assert.equal(component.slides.objectAt(0).text, 'First Slide', 'the first slide is visible');
+  assert.equal(component.slides.objectAt(1).text, '');
 
   component.prev.click();
 
-  assert.equal(component.slides(0).text, 'First Slide', 'the first slide is still visible');
-  assert.equal(component.slides(1).text, '');
+  assert.equal(component.slides.objectAt(0).text, 'First Slide', 'the first slide is still visible');
+  assert.equal(component.slides.objectAt(1).text, '');
 });
 
 test('when on the first slide, and when wrap is true, prev will move to the last slide', function (assert) {
@@ -166,13 +166,13 @@ test('when on the first slide, and when wrap is true, prev will move to the last
     {{/slide-deck}}
   `);
 
-  assert.equal(component.slides(0).text, 'First Slide');
-  assert.equal(component.slides(1).text, '');
+  assert.equal(component.slides.objectAt(0).text, 'First Slide');
+  assert.equal(component.slides.objectAt(1).text, '');
 
   component.prev.click();
 
-  assert.equal(component.slides(0).text, '');
-  assert.equal(component.slides(1).text, 'Second Slide');
+  assert.equal(component.slides.objectAt(0).text, '');
+  assert.equal(component.slides.objectAt(1).text, 'Second Slide');
 });
 
 test('when on the last slide, and when wrap is false, next will remain on the same slide', function (assert) {
@@ -188,13 +188,13 @@ test('when on the last slide, and when wrap is false, next will remain on the sa
     {{/slide-deck}}
   `);
 
-  assert.equal(component.slides(0).text, '');
-  assert.equal(component.slides(1).text, 'Second Slide', 'the second slide is visible');
+  assert.equal(component.slides.objectAt(0).text, '');
+  assert.equal(component.slides.objectAt(1).text, 'Second Slide', 'the second slide is visible');
 
   component.next.click();
 
-  assert.equal(component.slides(0).text, '');
-  assert.equal(component.slides(1).text, 'Second Slide', 'the second slide is still visible');
+  assert.equal(component.slides.objectAt(0).text, '');
+  assert.equal(component.slides.objectAt(1).text, 'Second Slide', 'the second slide is still visible');
 });
 
 test('when on the last slide, and when wrap is true, next will move to the first slide', function (assert) {
@@ -210,13 +210,13 @@ test('when on the last slide, and when wrap is true, next will move to the first
     {{/slide-deck}}
   `);
 
-  assert.equal(component.slides(0).text, '');
-  assert.equal(component.slides(1).text, 'Second Slide');
+  assert.equal(component.slides.objectAt(0).text, '');
+  assert.equal(component.slides.objectAt(1).text, 'Second Slide');
 
   component.next.click();
 
-  assert.equal(component.slides(0).text, 'First Slide');
-  assert.equal(component.slides(1).text, '');
+  assert.equal(component.slides.objectAt(0).text, 'First Slide');
+  assert.equal(component.slides.objectAt(1).text, '');
 });
 
 test('prev will move to the previous slide', function (assert) {
@@ -232,13 +232,13 @@ test('prev will move to the previous slide', function (assert) {
     {{/slide-deck}}
   `);
 
-  assert.equal(component.slides(0).text, '');
-  assert.equal(component.slides(1).text, 'Second Slide');
+  assert.equal(component.slides.objectAt(0).text, '');
+  assert.equal(component.slides.objectAt(1).text, 'Second Slide');
 
   component.prev.click();
 
-  assert.equal(component.slides(0).text, 'First Slide');
-  assert.equal(component.slides(1).text, '');
+  assert.equal(component.slides.objectAt(0).text, 'First Slide');
+  assert.equal(component.slides.objectAt(1).text, '');
 });
 
 test('next will move to the next slide', function (assert) {
@@ -254,13 +254,13 @@ test('next will move to the next slide', function (assert) {
     {{/slide-deck}}
   `);
 
-  assert.equal(component.slides(0).text, 'First Slide');
-  assert.equal(component.slides(1).text, '');
+  assert.equal(component.slides.objectAt(0).text, 'First Slide');
+  assert.equal(component.slides.objectAt(1).text, '');
 
   component.next.click();
 
-  assert.equal(component.slides(0).text, '');
-  assert.equal(component.slides(1).text, 'Second Slide');
+  assert.equal(component.slides.objectAt(0).text, '');
+  assert.equal(component.slides.objectAt(1).text, 'Second Slide');
 });
 
 test('show will move to the specified slide it if exists', function (assert) {
@@ -276,13 +276,13 @@ test('show will move to the specified slide it if exists', function (assert) {
     {{/slide-deck}}
   `);
 
-  assert.equal(component.slides(0).text, 'First Slide');
-  assert.equal(component.slides(1).text, '');
+  assert.equal(component.slides.objectAt(0).text, 'First Slide');
+  assert.equal(component.slides.objectAt(1).text, '');
 
   component.show.click();
 
-  assert.equal(component.slides(0).text, '');
-  assert.equal(component.slides(1).text, 'Second Slide');
+  assert.equal(component.slides.objectAt(0).text, '');
+  assert.equal(component.slides.objectAt(1).text, 'Second Slide');
 });
 
 test('show will throw an error if the specified slide does not exist', function (assert) {
@@ -310,7 +310,7 @@ test('slides can be rendered dynamically', function (assert) {
     {{/slide-deck}}
   `);
 
-  assert.equal(component.slides().count, 5);
+  assert.equal(component.slides.length, 5);
 });
 
 test('will move to the previous slide if the active slide is the last slide and it is removed', function (assert) {
@@ -328,13 +328,13 @@ test('will move to the previous slide if the active slide is the last slide and 
     {{/slide-deck}}
   `);
 
-  assert.equal(component.slides().count, 5);
-  assert.equal(component.slides(4).text, 5);
+  assert.equal(component.slides.length, 5);
+  assert.equal(component.slides.objectAt(4).text, 5);
 
   this.set('slides', [1, 2, 3, 4]);
 
-  assert.equal(component.slides().count, 4);
-  assert.equal(component.slides(3).text, 4);
+  assert.equal(component.slides.length, 4);
+  assert.equal(component.slides.objectAt(3).text, 4);
 });
 
 test('will move to the last slide if the active slide is the first slide and it is removed', function (assert) {
@@ -350,13 +350,13 @@ test('will move to the last slide if the active slide is the first slide and it 
     {{/slide-deck}}
   `);
 
-  assert.equal(component.slides().count, 5);
-  assert.equal(component.slides(0).text, 1);
+  assert.equal(component.slides.length, 5);
+  assert.equal(component.slides.objectAt(0).text, 1);
 
   this.set('slides', [2, 3, 4, 5]);
 
-  assert.equal(component.slides().count, 4);
-  assert.equal(component.slides(3).text, 5);
+  assert.equal(component.slides.length, 4);
+  assert.equal(component.slides.objectAt(3).text, 5);
 });
 
 test('will stay on the same slide if a different slide is removed', function (assert) {
@@ -372,13 +372,13 @@ test('will stay on the same slide if a different slide is removed', function (as
     {{/slide-deck}}
   `);
 
-  assert.equal(component.slides().count, 5);
-  assert.equal(component.slides(2).text, 3);
+  assert.equal(component.slides.length, 5);
+  assert.equal(component.slides.objectAt(2).text, 3);
 
   this.set('slides', [2, 3, 4, 5]);
 
-  assert.equal(component.slides().count, 4);
-  assert.equal(component.slides(1).text, 3);
+  assert.equal(component.slides.length, 4);
+  assert.equal(component.slides.objectAt(1).text, 3);
 });
 
 test('will call a supplied activeSlideRemoved action if the active slide is removed', function (assert) {
@@ -533,9 +533,9 @@ test('it yields all of the slides with their name', function (assert) {
     {{/slide-deck}}
   `);
 
-  assert.ok(component.yieldedSlides().count, 2);
-  assert.equal(component.yieldedSlides(0).text, 'one');
-  assert.equal(component.yieldedSlides(1).text, 'two');
+  assert.ok(component.yieldedSlides.length, 2);
+  assert.equal(component.yieldedSlides.objectAt(0).text, 'one');
+  assert.equal(component.yieldedSlides.objectAt(1).text, 'two');
 });
 
 test('it yields the correct isActive value for each slide based on whether it is the active slide', function (assert) {
@@ -551,9 +551,9 @@ test('it yields the correct isActive value for each slide based on whether it is
     {{/slide-deck}}
   `);
 
-  assert.ok(component.yieldedSlides().count, 2);
-  assert.equal(component.yieldedSlides(0).text, 'true');
-  assert.equal(component.yieldedSlides(1).text, 'false');
+  assert.ok(component.yieldedSlides.length, 2);
+  assert.equal(component.yieldedSlides.objectAt(0).text, 'true');
+  assert.equal(component.yieldedSlides.objectAt(1).text, 'false');
 });
 
 test('the yieled slide names can be rendered before the slides are defined', function (assert) {
@@ -569,9 +569,9 @@ test('the yieled slide names can be rendered before the slides are defined', fun
     {{/slide-deck}}
   `);
 
-  assert.ok(component.yieldedSlides().count, 2);
-  assert.ok(component.yieldedSlides(0).text, 'one');
-  assert.ok(component.yieldedSlides(1).text, 'two');
+  assert.ok(component.yieldedSlides.length, 2);
+  assert.ok(component.yieldedSlides.objectAt(0).text, 'one');
+  assert.ok(component.yieldedSlides.objectAt(1).text, 'two');
 });
 
 test('the yieled slide names can be rendered after the slides are defined', function (assert) {
@@ -587,7 +587,7 @@ test('the yieled slide names can be rendered after the slides are defined', func
     {{/slide-deck}}
   `);
 
-  assert.ok(component.yieldedSlides().count, 2);
-  assert.ok(component.yieldedSlides(0).text, 'one');
-  assert.ok(component.yieldedSlides(1).text, 'two');
+  assert.ok(component.yieldedSlides.length, 2);
+  assert.ok(component.yieldedSlides.objectAt(0).text, 'one');
+  assert.ok(component.yieldedSlides.objectAt(1).text, 'two');
 });
