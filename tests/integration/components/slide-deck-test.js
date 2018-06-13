@@ -121,13 +121,18 @@ test('an error is thrown when changing the active slide to one that does not exi
 });
 
 test('an error is thrown when registering a slide with a name that has already been used', function (assert) {
+  this.set('slides', ['one']);
+
+  this.render(hbs`
+    {{#slide-deck tagName="div" as |d|}}
+      {{#each slides as |slide|}}
+        {{d.slide name=slide tagName="div"}}
+      {{/each}}
+    {{/slide-deck}}
+  `);
+
   assert.expectAssertion(() => {
-    this.render(hbs`
-      {{#slide-deck tagName="div" as |d|}}
-        {{d.slide name="one" tagName="div"}}
-        {{d.slide name="one" tagName="div"}}
-      {{/slide-deck}}
-    `);
+    this.set('slides', ['one', 'one']);
   });
 });
 
