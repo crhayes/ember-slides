@@ -1,6 +1,7 @@
+import { isBlank } from '@ember/utils';
 import Component from '@ember/component';
-import { guidFor } from '@ember/object/internals';
 import { get, computed } from '@ember/object';
+import { guidFor } from '@ember/object/internals';
 import layout from '../templates/components/slide-card';
 
 export default Component.extend({
@@ -28,7 +29,8 @@ export default Component.extend({
    * @return {String}
    */
   identifier: computed('name', function() {
-    return get(this, 'name') || guidFor(this);
+    const name = get(this, 'name');
+    return isBlank(name) ? guidFor(this) : name;
   }),
 
   /**
