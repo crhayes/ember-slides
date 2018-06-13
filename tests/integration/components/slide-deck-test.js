@@ -71,6 +71,22 @@ test('setting activeSlide renders a slide by name', function (assert) {
   assert.equal(component.slides(1).text, 'Second Slide');
 });
 
+test('slide name can be set to the integer value 0', function (assert) {
+  this.render(hbs`
+    {{#slide-deck activeSlide=0 tagName="div" as |d|}}
+      {{#d.slide name=0 tagName="div" data-test-name="slide"}}
+        First Slide
+      {{/d.slide}}
+      {{#d.slide name=1 tagName="div" data-test-name="slide"}}
+        Second Slide
+      {{/d.slide}}
+    {{/slide-deck}}
+  `);
+
+  assert.equal(component.slides(0).text, 'First Slide');
+  assert.equal(component.slides(1).text, '');
+});
+
 test('slide changes mutate the bound value of activeSlide', function (assert) {
   this.set('slide', 'one');
 
