@@ -119,6 +119,12 @@ export default Component.extend({
    * @return {void}
    */
   activeSlideRemoved() {
+    const { isDestroying, isDestroyed } = this.getProperties('isDestroying', 'isDestroyed');
+
+    if (isDestroying || isDestroyed) {
+      return;
+    }
+
     const wrap = get(this, 'wrap');
 
     set(this, 'wrap', true);
