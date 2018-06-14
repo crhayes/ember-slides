@@ -5,13 +5,9 @@ import {
 } from 'ember-cli-page-object';
 
 export default {
-  slides: collection({
-    itemScope: '[data-test-name="slide"]'
-  }),
+  slides: collection('[data-test-name="slide"]'),
 
-  yieldedSlides: collection({
-    itemScope: '[data-test-name="yielded-slide"]'
-  }),
+  yieldedSlides: collection('[data-test-name="yielded-slide"]'),
 
   prev: {
     scope: '[data-test-name="prev"]',
