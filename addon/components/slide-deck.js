@@ -1,16 +1,10 @@
-import Ember from 'ember';
+import { A as array } from '@ember/array';
+import { assert } from '@ember/debug';
+import Component from '@ember/component';
+import { reads } from '@ember/object/computed';
+import { scheduleOnce } from '@ember/runloop';
+import { set, get, computed } from '@ember/object';
 import layout from '../templates/components/slide-deck';
-
-const {
-  A: array,
-  assert,
-  Component,
-  computed,
-  computed: { reads },
-  get,
-  run: { scheduleOnce },
-  set,
-} = Ember;
 
 export default Component.extend({
   layout,
