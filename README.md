@@ -1,4 +1,5 @@
-# Ember Slides
+Ember Slides
+==============================================================================
 
 [![Build Status](https://travis-ci.org/crhayes/ember-slides.svg?branch=master)](https://travis-ci.org/crhayes/ember-slides)
 
@@ -6,10 +7,13 @@ Signup "wizards", onboarding flows, image carousels... the list goes on. How man
 
 With Ember Slides you'll never have to write that step code again.
 
-## Installation
+Installation
+------------------------------------------------------------------------------
+
 `ember install ember-slides`
 
-## Examples
+Usage
+------------------------------------------------------------------------------
 
 **Hardcoded Slides**
 ```hbs
@@ -64,27 +68,35 @@ With Ember Slides you'll never have to write that step code again.
 
 There's more to see, so make sure to check out additional examples in the following files: [`tests/dummy/app/templates/application.hbs`](https://github.com/crhayes/ember-slides/blob/master/tests/dummy/app/templates/application.hbs) and [`tests/integration/components/slide-deck-test.js`](https://github.com/crhayes/ember-slides/blob/master/tests/integration/components/slide-deck-test.js).
 
-# Contributing
 
-## Installation
+Contributing
+------------------------------------------------------------------------------
+
+### Installation
 
 * `git clone https://github.com/crhayes/ember-slides`
 * `cd ember-slides`
 * `npm install`
 
-## Running
+### Linting
+
+* `npm run lint:js`
+* `npm run lint:js -- --fix`
+
+### Running tests
+
+* `ember test` – Runs the test suite on the current Ember version
+* `ember test --server` – Runs the test suite in "watch mode"
+* `ember try:each` – Runs the test suite against multiple Ember versions
+
+### Running the dummy application
 
 * `ember serve`
-* Visit your app at [http://localhost:4200](http://localhost:4200).
-
-## Running Tests
-
-* `npm test` (Runs `ember try:each` to test your addon against multiple Ember versions)
-* `ember test`
-* `ember test --server`
-
-## Building
-
-* `ember build`
+* Visit the dummy application at [http://localhost:4200](http://localhost:4200).
 
 For more information on using ember-cli, visit [https://ember-cli.com/](https://ember-cli.com/).
+
+License
+------------------------------------------------------------------------------
+
+This project is licensed under the [MIT License](LICENSE.md).
